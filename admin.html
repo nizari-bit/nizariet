@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #2f4f4f;
+            color: white;
+            padding-top: 20px;
+            transition: 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 16px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        .kichwa{
+            display: flex;
+            justify-content: center;
+            background-color: none;
+           
+            align-items: center;
+        }
+        .kichwa img{
+            height: 60px;
+            width: 60px;
+            border: none;
+            border-radius: 50%;
+            border-radius:none;
+        }
+        .kicha{
+            display: flex;
+            grid-gap: 20px;
+            align-items: center;
+        }
+        #main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .toggle-btn {
+            font-size: 30px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            color: #333;
+        }
+
+        .container {
+            margin-left: none;
+            padding: 50px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .admin-card {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        .btn-custom {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #2f4f4f;
+            color: white;
+        }
+
+        .table td a {
+            color: #28a745;
+        }
+
+        .table td a:hover {
+            color: #218838;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .container {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="mySidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Manage Users</a>
+        <a href="#">Manage Posts</a>
+        <a href="#">Settings</a>
+    </div>
+
+    <!-- Main content -->
+    <div id="main-content">
+        <!-- Toggle Button -->
+         <div class="kichwa">
+        <span class="toggle-btn" onclick="openNav()"><i class="fas fa-bars" id="ficha"></i></span>
+        <div class="kicha">
+            <img src="forest1.jpg" alt="">
+            <h2>Explore the World</h2>
+        </div>
+       
+        </div>
+        <!-- Admin Dashboard Header -->
+        <div class="container">
+            <h2>Admin Dashboard</h2>
+            <p>Manage users, posts, and settings</p>
+
+            <!-- Manage Users Section -->
+            <div class="card admin-card">
+                <div class="card-header">
+                    <h3>Manage Users</h3>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-custom" onclick="openAddUserForm()">Add New User</button>
+
+                    <!-- Users Table -->
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table">
+                            <!-- Example user row -->
+                            <tr>
+                                <td>JohnDoe</td>
+                                <td>john@example.com</td>
+                                <td>Admin</td>
+                                <td>
+                                    <a href="#">Edit</a> | <a href="#">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Manage Posts Section -->
+            <div class="card admin-card">
+                <div class="card-header">
+                    <h3>Manage Posts</h3>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-custom" onclick="openAddPostForm()">Add New Post</button>
+
+                    <!-- Posts Table -->
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="posts-table">
+                            <!-- Example post row -->
+                            <tr>
+                                <td>Adventure Trip</td>
+                                <td>Explore the mountains and valleys.</td>
+                                <td>
+                                    <a href="#">Edit</a> | <a href="#">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role">
+                                <option value="Admin">Admin</option>
+                                <option value="User">User</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-custom">Add User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Post Modal -->
+    <!-- Add Post Modal -->
+<div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPostModalLabel">Add New Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addPostForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="postTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="postTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="postContent" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postImage" class="form-label">Post Image</label>
+                        <input type="file" class="form-control" id="postImage" name="postImage" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-custom">Add Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        const ficha = document.getElementById('ficha');
+
+        function openNav() {
+            document.getElementById("mySidebar").style.left = "0";
+            document.getElementById("main-content").style.marginLeft = "250px";
+            ficha.style.display = "none";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.left = "-250px";
+            document.getElementById("main-content").style.marginLeft = "0";
+            ficha.style.display = "block";
+        }
+
+        function openAddUserForm() {
+            var userModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+            userModal.show();
+        }
+
+        function openAddPostForm() {
+            var postModal = new bootstrap.Modal(document.getElementById('addPostModal'));
+            postModal.show();
+        }
+    </script>
+</body>
+
+</html>
